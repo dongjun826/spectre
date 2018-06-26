@@ -1,0 +1,208 @@
+<!-- HTML header for doxygen 1.8.10-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=9"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="SXS Collaboration">
+    <meta name="generator" content="Doxygen 1.8.13"/>
+    <style>
+        /*!
+         * IE10 viewport hack for Surface/desktop Windows 8 bug
+         * Copyright 2014-2015 Twitter, Inc.
+         * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+         */
+        @-webkit-viewport { width: device-width; }
+        @-moz-viewport    { width: device-width; }
+        @-ms-viewport     { width: device-width; }
+        @-o-viewport      { width: device-width; }
+        @viewport         { width: device-width; }
+      </style>
+  <title>SpECTRE: Creating Executables</title>
+  <link href="tabs.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js", "color.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['^^','^^'], ['\\(', '\\)']]}
+});
+</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+  <link href="octicons.css" rel="stylesheet">
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="bootstrap.min.js"></script>
+  <script type="text/javascript" src="spectre.js"></script>
+  </head>
+  <body>
+  <div id="top" class="navbar-fixed-top"><!-- do not remove this div, it is closed by doxygen! -->
+  <!-- BEGIN TITLEAREA -->
+  <div id="titlearea">
+  <script type="text/javascript">
+  var searchBox = new SearchBox("searchBox", "search",false,'Search');
+  </script>
+  <div id="main-nav">
+    <ul class="sm sm-dox" id="main-menu">
+      <li>
+      <a href="index.html">
+      SpECTRE &#160;
+        <span id="projectnumber">v0.0.0</span>
+      </a>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="selected">
+          <span id="selected">
+            <i class="octicon octicon-book"></i><span>Documentation</span>
+          </span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li style="min-width: 135px;">
+            <a href="index.html">
+            <i class="octicon octicon-book"></i><span>Introduction</span></a>
+          </li>
+          <li style="min-width: 135px;">
+            <a href="installation.html">
+              <i class="octicon octicon-desktop-download"></i><span>Installation</span>
+            </a>
+          </li>
+          <li style="min-width: 135px;">
+            <a href="tutorials.html">
+              <i class="octicon octicon-mortar-board"></i><span>User Tutorials</span>
+            </a>
+          </li>
+          <li style="min-width: 135px;">
+            <a href="dev_guide.html">
+              <i class="octicon octicon-gist-secret"></i><span>Dev Guide</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="selected">
+          <span id="selected">
+            <i class="octicon octicon-code"></i>
+              <span>Reference</span>
+          </span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li style="min-width: 130px;">
+            <a href="modules.html">
+              <i class="octicon octicon-code"></i>
+              <span>Topics</span>
+            </a>
+          </li>
+          <li style="min-width: 130px;">
+            <a href="namespaces.html">
+              <i class="octicon octicon-gist"></i>
+              <span>Namespaces</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="files.html">
+          <i class="octicon octicon-file-directory"></i><span>Files</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/sxs-collaboration/spectre" target="_blank">
+          <i class="octicon octicon-mark-github"></i><span>View on GitHub</span>
+        </a>
+      </li>
+      <!--The Search <li> is added by doxygen later-->
+    </ul>
+  </div><!-- main-nav -->
+  </div><!-- titlearea -->
+  <!-- window showing the filter options -->
+  <div id="MSearchSelectWindow"  style="position: fixed;"
+       onmouseover="return searchBox.OnSearchSelectShow()"
+       onmouseout="return searchBox.OnSearchSelectHide()"
+       onkeydown="return searchBox.OnSearchSelectKey(event)">
+  </div>
+  <!-- iframe showing the search results (closed by default) -->
+  <div id="MSearchResultsWindow"  style="position: fixed;">
+  <iframe src="javascript:void(0)" frameborder="0"
+          name="MSearchResults" id="MSearchResults">
+  </iframe>
+  </div>
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Creating Executables </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>There are several different types of executables that can be built:</p><ul>
+<li>An executable that uses Charm++ to run in parallel, e.g. <code>Executables/ParallelInfo</code></li>
+<li>An executable that does not use Charm++, does not run in parallel, and supplies its own <code>main</code>, e.g. <code>Executables/Benchmark</code></li>
+<li>An executable that uses Charm++ to run in parallel but supplies its own <code>main</code></li>
+<li>An executable that uses custom compilation or linking flags, e.g. <code>DebugPreprocessor</code></li>
+<li>Executables used for evolutions or elliptic solves</li>
+</ul>
+<h3>Executable Using Charm++ for Parallelization</h3>
+<p>Pull request #751 will add documentation here.</p>
+<h3>Executable Using Charm++ with Custom main()</h3>
+<p>While this is technically possible, it has not been tested. We recommend using the Charm++ supplied main chare mechanism for the time being.</p>
+<h3>Executable Not Using Charm++</h3>
+<p>An example of an executable that does not use Charm++ for parallelization but still can use all other infrastructure in SpECTRE is in <code>src/Executables/HelloWorldNoCharm</code>. Adding a non-Charm++ executable to SpECTRE mostly follows the standard way of adding an executable using CMake. The only deviation is that the <code>CMakeLists.txt</code> file must tell Charm++ not to add a <code>main()</code> by passing the link flags <code>-nomain-module -nomain</code>. This is done using CMake's <code>set_target_properties</code>:</p>
+<div class="fragment"><div class="line">set_target_properties(</div><div class="line">  ${EXECUTABLE}</div><div class="line">  PROPERTIES LINK_FLAGS &quot;-nomain-module -nomain&quot;</div><div class="line">  )</div></div><!-- fragment --><p>To add the executable as a target you must use CMake's <code>add_executable</code> function directly, not any of the SpECTRE-provided wrappers that add Charm++ parallelized executables. For example,</p>
+<div class="fragment"><div class="line">add_executable(</div><div class="line">  ${EXECUTABLE}</div><div class="line">  EXCLUDE_FROM_ALL # Exclude from calls to `make` without a specified target</div><div class="line">  HelloWorld.cpp</div><div class="line">  )</div></div><!-- fragment --><p>You can link in any of the SpECTRE libraries by adding them to the <code>target_link_libraries</code>, for example:</p>
+<div class="fragment"><div class="line">target_link_libraries(</div><div class="line">  ${EXECUTABLE}</div><div class="line">  DataStructures</div><div class="line">  )</div></div><!-- fragment --><p>We recommend that you add a test that the executable properly runs by adding an input file to <code>tests/InputFiles</code> in an appropriate subdirectory. See <a href="https://github.com/sxs-collaboration/spectre/tree/develop/tests/InputFiles/
+ExampleExecutables/HelloWorldNoCharm.yaml"><code>tests/InputFiles/ExampleExecutables/HelloWorldNoCharm.yaml</code></a> for an example. The input file is passed to the executable using <code>--input-file path/to/Input.yaml</code>. In the case of the executable not taking any input file this is just used to generate a test that runs the executable.</p>
+<p>For these types of executables <code>main</code> can take the usual <code>(int argc, char *argv[])</code> and parse command line options. Executables not using Charm++ are just standard executables that can link in any of the libraries in SpECTRE.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Currently calling <code><a class="el" href="group__ParallelGroup.html#gaccc68e564135958d18110d2847dcc1b3" title="Abort the program with an error message. ">Parallel::abort</a></code> results in a segfault deep inside Charm++ code. However, the error messages from <code>ASSERT</code> and <code>ERROR</code> are still printed.</dd></dl>
+<h3>Executable With Custom Compilation or Linking Flags</h3>
+<p>Use the CMake function <code>set_target_properties</code> to add flags to an executable. To call a completely custom compiler invocation you should use the <code>add_custom_target</code> CMake function. The need for the <code>custom_target</code> level of control is rare and should generally be avoided since it adds quite a bit of technical debt to the code base. Thus, it is not explained here. If you are certain you need it you can see the <code>DebugPreprocessor</code> executable's <code>CMakeLists.txt</code> file for an example.</p>
+<h3>Executable Used for Evolution or Elliptic Solve</h3>
+<p>Once they are written, see the tutorials specific to evolution and elliptic solves. </p>
+</div></div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.10-->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+&copy; Copyright 2017 - 2018
+<a href="https://black-holes.org">SXS Collaboration</a>,
+<a href="LICENSE.txt" target="_blank">
+<span class="hidden-xs">Distributed under the</span>
+MIT License</a>
+</small></address>
+</body>
+</html>
