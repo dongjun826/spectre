@@ -87,11 +87,11 @@ int main() {
 
     // Write analytic solutions to .h5 and .xdmf files
     std::stringstream directory;
-    directory << "Step_" << std::setfill('0') << std::setw(8)
+    directory << "VolumeData_" << std::setfill('0') << std::setw(8)
               << static_cast<size_t>(t * 1000.0 + 0.5) << "_00000000";
     file_system::create_directory(directory.str());
     std::stringstream file_name;
-    file_name << directory.str() << "/ScalarWave2D.h5";
+    file_name << directory.str() << "/Node0.h5";
     vis::VolumeFile output(file_name.str(), 2);
     output.write_xdmf_time(t);
     output.write_element_connectivity_and_coordinates(t, grid_coords, extents,
