@@ -4,3 +4,4 @@
 add_subdirectory(HelloWorld)
 add_subdirectory(HelloWorldNoCharm)
 add_subdirectory(XdmfOutput)
+add_subdirectory(Sphere)
