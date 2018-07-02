@@ -42,9 +42,10 @@
 extern "C" void CkRegisterMainModule(void) {}
 
 int main() {
+
   // Set up domain
-  const double inner_radius = 1.0;
-  const double outer_radius = 2.0;
+  const double inner_radius = 0.5;
+  const double outer_radius = 4.0;
   const size_t refinement = 2;
   const std::array<size_t, 2> grid_points_r_angular{{4, 4}};
   const DomainCreators::Sphere<Frame::Inertial>& sphere{
@@ -52,15 +53,17 @@ int main() {
   const auto domain = sphere.create_domain();
 
   // Initialize a scalar wave
-  const double kx = -1.5;
-  const double ky = -1.5;
-  const double center_x = 2.4;
-  const double center_y = -4.8;
+  const double kx = -1.0;
+  const double ky = -1.0;
+  const double kz = -1.0;
+  const double center_x = 0.0;
+  const double center_y = 0.0;
+  const double center_z = 0.0;
 
   // Acquire analytic solution to scalar wave
   const ScalarWave::Solutions::PlaneWave<3> pw(
-      {{kx, ky}}, {{center_x, center_y}},
-      std::make_unique<MathFunctions::PowX>(3));
+    {{kx, ky, kz}}, {{center_x, center_y, center_z}},
+    std::make_unique<MathFunctions::PowX>(3));
 
   for (double t = 0.0; t < 1.0; t = t + 0.1) {
     // Set up .h5 and .xdmf files
@@ -75,7 +78,7 @@ int main() {
 
     // Find analytic solution for each block
     for (size_t i = 0; i < domain.blocks().size(); ++i) {
-      const Index<3> extents(Index<3>(5, 5, 5));
+      const Index<3> extents(Index<3>(10, 10, 10));
       std::stringstream element_id;
       element_id << "[0][" << i << "]";
       const auto logical_coords = logical_coordinates(extents);
