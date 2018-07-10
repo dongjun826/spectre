@@ -30,8 +30,10 @@
 #include "Domain/DomainCreators/DomainCreator.hpp"
 #include "Domain/DomainCreators/Sphere.hpp"
 #include "Domain/LogicalCoordinates.hpp"
+#include "Domain/Mesh.hpp"
 #include "IO/Connectivity.hpp"
 #include "IO/VolumeDataFile.hpp"
+#include "NumericalAlgorithms/Spectral/Spectral.hpp"
 #include "PointwiseFunctions/AnalyticSolutions/WaveEquation/PlaneWave.hpp"
 #include "PointwiseFunctions/MathFunctions/MathFunction.hpp"
 #include "PointwiseFunctions/MathFunctions/PowX.hpp"
@@ -78,10 +80,12 @@ int main() {
 
     // Find analytic solution for each block
     for (size_t i = 0; i < domain.blocks().size(); ++i) {
+      const Mesh<3> mesh{{{10, 10, 10}}, Spectral::Basis::Legendre,
+         Spectral::Quadrature::GaussLobatto};
       const Index<3> extents(Index<3>(10, 10, 10));
       std::stringstream element_id;
       element_id << "[0][" << i << "]";
-      const auto logical_coords = logical_coordinates(extents);
+      const auto logical_coords = logical_coordinates(mesh);
       const auto grid_coords =
           domain.blocks()[i].coordinate_map()(logical_coords);
       const tnsr::I<DataVector, 3> coord{std::array<DataVector, 3>{

@@ -17,6 +17,7 @@ target_link_libraries(
   DomainCreators
   IO
   MathFunctions
+  Spectral
   Utilities
   WaveEquation
   ${SPECTRE_LIBRARIES}
