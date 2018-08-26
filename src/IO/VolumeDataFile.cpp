@@ -3,8 +3,9 @@
 
 #include "VolumeDataFile.hpp"
 
-#include <cstring>
 #include <errno.h>
+#include <cstring>
+#include <iostream>
 #include <numeric>
 
 #include "ErrorHandling/Assert.hpp"
@@ -22,8 +23,10 @@ class Index;
 
 namespace vis {
 
-VolumeFile::VolumeFile(std::string file_name, int format_id)
-    : h5_file_name_(std::move(file_name)), format_id_(format_id) {
+VolumeFile::VolumeFile(std::string file_name, int format_id, bool append)
+    : h5_file_name_(std::move(file_name)),
+      format_id_(format_id),
+      append_(append) {
   create_file();
 }
 
@@ -35,6 +38,7 @@ VolumeFile::~VolumeFile() {
 
 void VolumeFile::write_xdmf_time(const double time) {
   std::fprintf(xml_, "<Time Value=\"%1.18e\"/>\n", time);  // NOLINT
+  std::cout << "write time!\n";
 }
 
 void VolumeFile::write_element_time(const double time,
@@ -169,7 +173,6 @@ void VolumeFile::write_element_data(
       }
     }
   }
-  ss << "</Grid>\n";
   std::fprintf(xml_, "%s", ss.str().c_str());  // NOLINT
   std::fflush(xml_);
 }
@@ -177,30 +180,41 @@ void VolumeFile::write_element_data(
 void VolumeFile::create_file() {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
-  file_id_ =
-      H5Fcreate(h5_file_name_.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+  if (append_) {
+    file_id_ = H5Fopen(h5_file_name_.c_str(), H5F_ACC_RDWR, H5P_DEFAULT);
+    std::cout << "File opened\n";
+    xml_file_name_ +=
+        h5_file_name_.substr(0, h5_file_name_.find_last_of('.')) + ".xmf";
+    xml_ = std::fopen(xml_file_name_.c_str(), "a");
+
+  } else {
+    std::cout << "File created\n";
+    file_id_ = H5Fcreate(h5_file_name_.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT,
+                         H5P_DEFAULT);
 #pragma GCC diagnostic pop
-  CHECK_H5(file_id_, "Failed to create file '" << h5_file_name_ << "'");
-  const h5::detail::OpenGroup group(file_id_, "/", h5::AccessType::ReadWrite);
-  hid_t s_id = H5Screate(H5S_SCALAR);
-  CHECK_H5(s_id, "Failed to create dataspace");
+    CHECK_H5(file_id_, "Failed to create file '" << h5_file_name_ << "'");
+    const h5::detail::OpenGroup group(file_id_, "/", h5::AccessType::ReadWrite);
+    hid_t s_id = H5Screate(H5S_SCALAR);
+    CHECK_H5(s_id, "Failed to create dataspace");
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
-  const hid_t att_id = H5Acreate2(group.id(), "FileFormatVersion",
-                                  h5::h5_type<decltype(format_id_)>(), s_id,
-                                  H5P_DEFAULT, H5P_DEFAULT);
+    const hid_t att_id = H5Acreate2(group.id(), "FileFormatVersion",
+                                    h5::h5_type<decltype(format_id_)>(), s_id,
+                                    H5P_DEFAULT, H5P_DEFAULT);
 #pragma GCC diagnostic pop
-  CHECK_H5(att_id, "Failed to create attribute 'FileFormatVersion'");
-  CHECK_H5(H5Awrite(att_id, h5::h5_type<decltype(format_id_)>(),
-                    static_cast<void*>(&format_id_)),
-           "Failed to write file format version");
-  CHECK_H5(H5Sclose(s_id), "Failed to close dataspace");
-  CHECK_H5(H5Aclose(att_id), "Failed to close attribute");
+    CHECK_H5(att_id, "Failed to create attribute 'FileFormatVersion'");
+    CHECK_H5(H5Awrite(att_id, h5::h5_type<decltype(format_id_)>(),
+                      static_cast<void*>(&format_id_)),
+             "Failed to write file format version");
+    CHECK_H5(H5Sclose(s_id), "Failed to close dataspace");
+    CHECK_H5(H5Aclose(att_id), "Failed to close attribute");
 
-  xml_file_name_ +=
-      h5_file_name_.substr(0, h5_file_name_.find_last_of('.')) + ".xmf";
+    xml_file_name_ +=
+        h5_file_name_.substr(0, h5_file_name_.find_last_of('.')) + ".xmf";
 
-  xml_ = std::fopen(xml_file_name_.c_str(), "w");
+    xml_ = std::fopen(xml_file_name_.c_str(), "w");
+  }
+
   if (nullptr == xml_) {
     // LCOV_EXCL_START
     ERROR("Failed to open file '" << xml_file_name_ << "' with error '"

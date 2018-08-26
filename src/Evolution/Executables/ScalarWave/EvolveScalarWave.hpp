@@ -14,6 +14,7 @@
 #include "ErrorHandling/FloatingPointExceptions.hpp"
 #include "Evolution/Actions/ComputeVolumeDuDt.hpp"
 #include "Evolution/DiscontinuousGalerkin/DgElementArray.hpp"
+#include "Evolution/Observers/Observers.hpp"
 #include "Evolution/Systems/ScalarWave/System.hpp"
 #include "NumericalAlgorithms/DiscontinuousGalerkin/Actions/ApplyBoundaryFluxesGlobalTimeStepping.hpp"
 #include "NumericalAlgorithms/DiscontinuousGalerkin/Actions/ComputeNonconservativeBoundaryFluxes.hpp"
@@ -50,7 +51,7 @@ struct EvolutionMetavars {
   using component_list = tmpl::list<DgElementArray<
       EvolutionMetavars,
       tmpl::list<Actions::AdvanceTime, Actions::FinalTime,
-                 Actions::ComputeVolumeDuDt<Dim>,
+                 Actions::ComputeVolumeDuDt<Dim>, Actions::Observe<Dim>,
                  dg::Actions::ComputeNonconservativeBoundaryFluxes,
                  dg::Actions::SendDataForFluxes<EvolutionMetavars>,
                  dg::Actions::ReceiveDataForFluxes<EvolutionMetavars>,
@@ -62,11 +63,7 @@ struct EvolutionMetavars {
       "The analytic solution is: PlaneWave\n"
       "The numerical flux is:    UpwindFlux\n"};
 
-  enum class Phase {
-    Initialization,
-    Evolve,
-    Exit
-  };
+  enum class Phase { Initialization, Evolve, Exit };
 
   static Phase determine_next_phase(
       const Phase& current_phase,

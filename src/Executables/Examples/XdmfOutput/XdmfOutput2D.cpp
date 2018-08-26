@@ -92,7 +92,7 @@ int main() {
     file_system::create_directory(directory.str());
     std::stringstream file_name;
     file_name << directory.str() << "/Node0.h5";
-    vis::VolumeFile output(file_name.str(), 2);
+    vis::VolumeFile output(file_name.str(), 2, false);
     output.write_xdmf_time(t);
     output.write_element_connectivity_and_coordinates(t, grid_coords, extents,
                                                       element_id);

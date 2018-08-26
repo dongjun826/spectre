@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <cstdio>
 #include <hdf5.h>
+#include <cstdio>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <unordered_map>
@@ -33,7 +34,7 @@ namespace vis {
 class VolumeFile {
  public:
   /// Open a file for volume data output
-  VolumeFile(std::string file_name, int format_id);
+  VolumeFile(std::string file_name, int format_id, bool append);
   VolumeFile(const VolumeFile& /*rhs*/) = delete;
   VolumeFile& operator=(const VolumeFile& /*rhs*/) = delete;
   VolumeFile(VolumeFile&& /*rhs*/) = delete;
@@ -49,6 +50,13 @@ class VolumeFile {
    * \param time the coordinate time
    */
   void write_xdmf_time(double time);
+
+  template <size_t Dim, typename Fr>
+  void write_element(double time,
+                     const tnsr::I<DataVector, Dim, Fr>& grid_coordinates,
+                     const Index<Dim>& extents, const std::string& element_id,
+                     const std::vector<std::string>& coordinate_names = {
+                         "x-coord", "y-coord", "z-coord"});
 
   /*!
    * Write the time, extents, connectivity and grid coordinates into the volume
@@ -116,11 +124,24 @@ class VolumeFile {
   int precision_{8};
   hid_t file_id_{-1};
   FILE* xml_{nullptr};
+  bool append_{false};
 };
 
 // ======================================================================
 // Template Definitions
 // ======================================================================
+
+template <size_t Dim, typename Fr>
+void VolumeFile::write_element(
+    const double time, const tnsr::I<DataVector, Dim, Fr>& grid_coordinates,
+    const Index<Dim>& extents, const std::string& element_id,
+    const std::vector<std::string>& coordinate_names) {
+  write_element_connectivity_and_coordinates(time, grid_coordinates, extents,
+                                             element_id, coordinate_names);
+  std::stringstream ss;
+  ss << "</Grid>\n";
+  std::fprintf(xml_, "%s", ss.str().c_str());
+}
 
 template <size_t Dim, typename Fr>
 void VolumeFile::write_element_connectivity_and_coordinates(
@@ -132,6 +153,7 @@ void VolumeFile::write_element_connectivity_and_coordinates(
   write_element_connectivity(extents, element_id);
   write_element_coordinates(grid_coordinates, extents, element_id,
                             coordinate_names);
+  std::cout << "write coordinates and topology!\n";
 }
 
 template <size_t Dim, typename Fr>

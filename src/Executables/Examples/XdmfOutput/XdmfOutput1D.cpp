@@ -71,7 +71,7 @@ int main() {
   detyped_tensors.emplace("scalar"s, scalar.get_vector_of_data());
 
   // Write analytic solutions to .h5 and .xdmf files
-  vis::VolumeFile my_file("ScalarWave1D.h5", 2);
+  vis::VolumeFile my_file("ScalarWave1D.h5", 2, false);
   my_file.write_xdmf_time(t);
   my_file.write_element_connectivity_and_coordinates(t, grid_coords, extents,
                                                      element_id);

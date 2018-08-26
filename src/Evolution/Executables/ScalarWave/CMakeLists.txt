@@ -47,6 +47,7 @@ function(add_scalar_wave_executable DIM)
     DomainCreators
     Informer
     LinearOperators
+    IO
     MathFunctions
     ScalarWave
     Time
