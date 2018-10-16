@@ -26,3 +26,5 @@ target_link_libraries(
   INTERFACE ErrorHandling
   INTERFACE Utilities
   )
+
+add_subdirectory(H5/Python)
