@@ -41,7 +41,7 @@ void bind_datavector() {
            })
       .def("__setitem__",
            +[](DataVector& t, const size_t i, const double v) {
-             bounds_check(t, i);
+             bounds_check(t,i);
              t[i] = v;
            })
       // Need __str__ for converting to string/printing
