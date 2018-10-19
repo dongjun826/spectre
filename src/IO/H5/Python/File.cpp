@@ -26,16 +26,6 @@ void bind_h5file() {
            +[](const h5::H5File<h5::AccessType::ReadWrite>& f) {
              return f.name();
            })
-      .def("get_dat_header",
-           +[](const h5::H5File<h5::AccessType::ReadWrite>& f,
-               const std::string& path) {
-             return f.get<h5::Header>(path).get_header();
-           })
-      .def("get_dat_version",
-           +[](const h5::H5File<h5::AccessType::ReadWrite>& f,
-               const std::string& path) {
-             return f.get<h5::Version>(path).get_version();
-           })
       .def("get_dat",
            +[](const h5::H5File<h5::AccessType::ReadWrite>& f,
                const std::string& path) -> const h5::Dat& {
