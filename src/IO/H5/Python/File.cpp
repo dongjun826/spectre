@@ -5,6 +5,7 @@
 #include <boost/python.hpp>
 #include <boost/python/reference_existing_object.hpp>
 #include <boost/python/return_value_policy.hpp>
+#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -13,9 +14,16 @@
 #include "IO/H5/File.hpp"
 #include "IO/H5/Header.hpp"
 #include "IO/H5/OpenGroup.hpp"
+#include "IO/H5/Type.hpp"
 #include "IO/H5/Version.hpp"
 
 namespace bp = boost::python;
+
+template <typename T>
+inline std::vector<T> py_list_to_std_vector(const bp::object& iterable) {
+  return std::vector<T>(bp::stl_input_iterator<T>(iterable),
+                        bp::stl_input_iterator<T>());
+}
 
 namespace py_bindings {
 void bind_h5file() {
@@ -28,15 +36,19 @@ void bind_h5file() {
            })
       .def("get_dat",
            +[](const h5::H5File<h5::AccessType::ReadWrite>& f,
-               const std::string& path) -> const h5::Dat& {
-             const auto& dat_file = f.get<h5::Dat>(path);
+               const bp::str& path) -> const h5::Dat& {
+             const auto& dat_file =
+                 f.get<h5::Dat>(bp::extract<std::string>(path));
              return dat_file;
            },
            bp::return_value_policy<bp::reference_existing_object>())
       .def("insert_dat",
-           +[](h5::H5File<h5::AccessType::ReadWrite>& f,
-               const std::string& path, const std::vector<std::string>& legend,
-               uint32_t version) { f.insert<h5::Dat>(path, legend, version); })
+           +[](h5::H5File<h5::AccessType::ReadWrite>& f, const bp::str& path,
+               const bp::list& legend, uint32_t version) {
+             f.insert<h5::Dat>(bp::extract<std::string>(path),
+                               py_list_to_std_vector<std::string>(legend),
+                               version);
+           })
       .def("close", +[](const h5::H5File<h5::AccessType::ReadWrite>& f) {
         f.close_current_object();
       });

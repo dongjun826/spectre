@@ -5,7 +5,7 @@ set(LIBRARY "PyIOH5File")
 
 spectre_python_add_module(
   IOH5File
-  SOURCES Bindings.cpp File.cpp
+  SOURCES Bindings.cpp Dat.cpp File.cpp
   MODULE_PATH "IO/H5/"
   )
 
@@ -19,7 +19,7 @@ set(LIBRARY "PyIOH5Dat")
 
 spectre_python_add_module(
   IOH5Dat
-  SOURCES Bindings.cpp Dat.cpp
+  SOURCES Bindings.cpp Dat.cpp File.cpp
   MODULE_PATH "IO/H5/"
   )
 
