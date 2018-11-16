@@ -62,5 +62,6 @@ spectre_run_cmake() {
     cmake -D CHARM_ROOT=$CHARM_ROOT \
           -D CMAKE_BUILD_TYPE=Release \
           -D CMAKE_Fortran_COMPILER=gfortran \
+          -D BUILD_PYTHON_BINDINGS=on \
           $SPECTRE_HOME
 }

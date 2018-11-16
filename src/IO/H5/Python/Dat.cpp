@@ -58,8 +58,8 @@ void bind_h5dat() {
            +[](h5::Dat& D) -> bp::list {
              std::array<hsize_t, 2> dimension = D.get_dimensions();
              bp::list dim;
+             dim.append(dimension[0]);
              dim.append(dimension[1]);
-             dim.append(dimension[2]);
              return dim;
            })
       .def("get_header", +[](h5::Dat& D) { return D.get_header(); })
