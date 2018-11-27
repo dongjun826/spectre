@@ -11,9 +11,6 @@ void bind_h5dat();
 BOOST_PYTHON_MODULE(_IOH5File) {
   Py_Initialize();
   py_bindings::bind_h5file();
-}
-
-BOOST_PYTHON_MODULE(_IOH5Dat) {
-  Py_Initialize();
   py_bindings::bind_h5dat();
 }
+
