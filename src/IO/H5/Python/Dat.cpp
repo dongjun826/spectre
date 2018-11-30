@@ -4,11 +4,11 @@
 #include <hdf5.h>
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include <boost/python/stl_iterator.hpp>
 #include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
-#include "boost/python/stl_iterator.hpp"
 
 #include "DataStructures/Matrix.hpp"
 #include "IO/H5/Dat.hpp"
