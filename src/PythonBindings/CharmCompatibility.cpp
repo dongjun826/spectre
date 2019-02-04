@@ -4,6 +4,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
+#include <string>
 
 // In order to not get runtime errors that CmiPrintf, etc. are not defined we
 // provide resonable replacements for them. Getting the correct Charm++ library
